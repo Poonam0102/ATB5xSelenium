@@ -5,7 +5,6 @@ import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterTest;
@@ -14,10 +13,9 @@ import org.testng.annotations.Test;
 
 import java.time.Duration;
 
-//wait
+public class Selenium22 {
 
-public class Selenium21 {
-
+//    Explicit wait
     @BeforeTest
     public void openbrowser() {
         EdgeOptions options = new EdgeOptions();
@@ -30,13 +28,24 @@ public class Selenium21 {
     public void testpositive(){
         driver.get("https://app.vwo.com/#/login");
         driver.manage().window().maximize();
-        driver.findElement(By.id("login-username")).sendKeys("gfsfg");
-        driver.findElement(By.id("login-password")).sendKeys("fdsg");
+
+        // driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        // Global wait to all the elements which we don't use
+
+        driver.findElement(By.id("login-username")).sendKeys("contact+atb5x@thetestingacademy.com");
+        driver.findElement(By.id("login-password")).sendKeys("ATBx@1234");
         driver.findElement(By.id("js-login-btn")).click();
-        WebElement error_msg = driver.findElement(By.id("js-notification-box-msg"));
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3000));
-        wait.until(ExpectedConditions.textToBePresentInElement (error_msg ,"Your email, password, IP address or location did not match"));
-        System.out.println("1 -> " +error_msg.getText());
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10000));
+        // wait.until(ExpectedConditions.visibilityOf(By.cssSelector("[data-qa='lufexuloga']")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("[data-qa='lufexuloga']")));
+        WebElement loggedin_username = driver.findElement(By.cssSelector("[data-qa='lufexuloga']"));
+
+
+
+        System.out.println("Logged in User details -> " + loggedin_username.getText());
+
+
     }
 
 @AfterTest
